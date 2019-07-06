@@ -18,11 +18,6 @@ cd $WORKSPACE/srcdir/gnuplot-5.2.7/
 ./configure --prefix=$prefix --host=$target
 make
 make install
-
-if [ $target = "x86_64-w64-mingw32" ]; then
-
-fi
-
 """
 
 # These are the platforms we will build for by default, unless further
