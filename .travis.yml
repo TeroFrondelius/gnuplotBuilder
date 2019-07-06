@@ -1,0 +1,39 @@
+language: julia
+os:
+  - linux
+julia:
+  - 1.0
+notifications:
+  email: false
+git:
+  depth: 99999999
+cache:
+  timeout: 1000
+  directories:
+    - downloads
+env:
+  global:
+    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+    - BINARYBUILDER_AUTOMATIC_APPLE=false
+sudo: required
+
+# Before anything else, get the latest versions of things
+before_script:
+  - julia -e 'using Pkg; pkg"add BinaryProvider"; pkg"add BinaryBuilder#master"; Pkg.build()'
+
+script:
+  - julia build_tarballs.jl
+
+
+deploy:
+    provider: releases
+    api_key:
+        # Note; this api_key is only valid for TeroFrondelius/gnuplotBuilder; you need
+        # to make your own: https://docs.travis-ci.com/user/deployment/releases/
+        secure: lLBjjIDUHExEABv8Hiy6dAJ8itE6nz1Y+Cl77Bfm+BfMB6f4Ey7GydB596vKiIuEnLCNhz3NmjdsrfpRJUnhhhEmFnoRfxFLxO5QfjpUYXCEgvsi49EyNwB/WYE7siFdNUeL/yyY745dqSm08lqLQxXUAwbKA3pOwZCKxj4De/od4D4drDotBHFhdIyBcOYU1AwurbJguzes0/dWSH4g1MJr+PHsZU3fV075/OsAOlcIPmACTpt8VRlxRqmmgQm4eQkXsrjTcCsRe4KndrEcm7tgDLyrj02C7IIAp0HGFjjoiYK71bXjgt/scLHcMyoQGO7SkGglzfUJVcpobRGfmkpRNzq3B5UPOA6UEfP2CC/fS026igG+B8YUGpffpNHbfsKveJ7hMX5w/G+chQC1yaOPgU4Ux1T3SmRrdUmerWcss3CPs3EcRKhb4I6BRKb182UJm8ssncRWT0P+5oFwVEgchRaimAmX4Mb6BkvfrCFRVMwZm0j1KuzrH0XQ9dNfw4bfKpPaG6fG+oaQ9DRLUtWlSj2UOrdjB8njC84naqW6F9gKpmUNPY8lHs2+arVJZMxxQZix//RTp7R5c+N9kh+tF3JmQPYIDjxidA76kG6BzZdNS3I6s0TPd6u76AZxqNZE5vUVNWMrZbBfEAb6vjrMC74rvdrCdrOdRNkcUtY=
+    file_glob: true
+    file: products/*
+    skip_cleanup: true
+    on:
+        repo: TeroFrondelius/gnuplotBuilder
+        tags: true
