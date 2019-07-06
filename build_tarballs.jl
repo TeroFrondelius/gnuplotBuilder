@@ -23,28 +23,6 @@ if [ $target = "x86_64-w64-mingw32" ]; then
 
 fi
 
-if [ $target = "x86_64-w64-mingw32" ]; then
-cd $WORKSPACE/srcdir
-cd ..
-find . -name=so
-find . -n=so
-find . --name=so
-find . -name so
-find . -name gnu
-find -name gnu .
-find . -name ".so"
-find . -name ".so"
-find . -name "gnuplot"
-find . -name "*.so"
-find . -name "so"
-find . -name "o"
-find . -name "gnu"
-find . -name "*gnu*"
-find . -name "*so*"
-find . -name "*dll*"
-
-fi
-
 """
 
 # These are the platforms we will build for by default, unless further
